@@ -1,74 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Balazssssssss Kaszinó ajánlatok – Új verzió</title>
+  <title>Balazssssssss Kaszinó Ajánlatok</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="icon" href="https://static-cdn.jtvnw.net/jtv_user_pictures/892093d3-fd92-4446-aa07-1debe1c26321-profile_image-70x70.png" type="image/png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
     body {
-      background: linear-gradient(135deg,#0f172a,#1e293b);
+      background: radial-gradient(circle at top left, #1e293b, #0f172a 70%);
       font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
       color: #f8fafc;
-    }
-
-    .info {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid #FFD700;
-      color: #FFD700;
-      background-color: transparent;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .info:hover {
-      background-color: #FFD700;
-      color: #0f172a;
-    }
-
-    .casino-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 18px rgba(255,215,0,0.2);
-      background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-      border-radius: 14px;
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
     }
 
-    .casino-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 12px 25px rgba(255,215,0,0.3);
+    /* mozgó háttér fény */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 25% 25%, rgba(255,215,0,0.08), transparent 40%),
+                  radial-gradient(circle at 75% 75%, rgba(255,215,0,0.06), transparent 40%);
+      animation: moveGlow 12s infinite alternate ease-in-out;
+      z-index: -1;
+    }
+    @keyframes moveGlow {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-10%, -10%); }
     }
 
-    .casino-card::before {
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: rgba(15,23,42,0.85);
+      border-bottom: 1px solid rgba(255,215,0,0.3);
+      transition: background 0.4s;
+    }
+
+    .casino-card {
+      transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.8s ease;
+      box-shadow: 0 6px 18px rgba(255,215,0,0.2);
+      background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .casino-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .casino-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(255,215,0,0.35);
+    }
+
+    /* egyedi színek a kártyák tetejére */
+    .casino-card.punter::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #FFD700, #FFC107, #FFB300);
+      background: linear-gradient(90deg, #FFD700, #FFC107); /* sárga */
     }
 
-    .casino-logo {
+    .casino-card.velobet::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFD700, #FFC107); /* sárga */
+    }
+
+    .casino-card.fezbet::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFD700, #FFC107); /* sárga */
+    }
+
+    .casino-card.luckyspin::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFD700, #FFC107); /* sárga */
+    }
+
+    .casino-card.royalwin::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFD700, #FFC107); /* sárga */
+    }
+
+    .casino-logo img {
       transition: transform 0.3s ease;
     }
-    .casino-card:hover .casino-logo {
+    .casino-card:hover .casino-logo img {
       transform: scale(1.1);
     }
 
     .deal-badge {
       background: linear-gradient(45deg, #FFD700, #FFB300);
-      color:#0f172a;
-      font-weight:bold;
+      color: #0f172a;
+      font-weight: bold;
       clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%, 10% 50%);
     }
 
@@ -76,32 +126,40 @@
       background: linear-gradient(45deg, #FFD700, #FFC107);
       transition: all 0.3s ease;
       color: #0f172a;
-      font-weight:bold;
+      font-weight: bold;
     }
     .btn-primary:hover {
-      transform: translateY(-2px) scale(1.02);
+      transform: translateY(-2px) scale(1.05);
       box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
     }
 
-    header {
-      background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-      border-radius: 0 0 16px 16px;
-      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+    /* sárga glow a kártya leírásokra */
+    .info {
+      background: #0f172a;
+      padding: 8px 12px;
+      border-radius: 8px;
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3);
+      animation: glowPulse 2s ease-in-out infinite;
     }
 
-    /* Age check */
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3); }
+      50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.4); }
+    }
+
+    /* age check */
     #age-check {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.9);
-      color: rgb(255, 0, 0);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 9999;
     }
-
     .age-btn {
       margin: 10px;
       padding: 10px 20px;
@@ -119,7 +177,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen">
+<body>
 
 <!-- Age check -->
 <div id="age-check">
@@ -133,119 +191,91 @@
   </div>
 </div>
 
-<!-- BAL OLDALI MENÜ -->
-
-
-<!-- HEADER -->
-<header class="py-6 px-4 md:px-10">
+<header class="py-5 px-6 shadow-lg">
   <div class="container mx-auto flex justify-between items-center">
     <div class="flex items-center gap-4">
-      <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/892093d3-fd92-4446-aa07-1debe1c26321-profile_image-70x70.png" class="w-14 h-14 rounded-full border-2 border-yellow-500">
-      <h1 class="text-3xl font-bold text-white">Balazssssssss</h1>
+      <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/892093d3-fd92-4446-aa07-1debe1c26321-profile_image-70x70.png" class="w-12 h-12 rounded-full border-2 border-yellow-500">
+      <h1 class="text-2xl md:text-3xl font-bold text-white">Balazssssssss</h1>
     </div>
-    <nav class="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-6 mt-4 md:mt-0">
-      <a href="#" class="text-white hover:text-yellow-400">Home</a>
-      <a href="https://streamelements.com/Balazssssssss/store" target="_blank" class="text-white hover:text-yellow-400">Store</a>
-     
-      <a href="https://twitch.tv/Balazssssssss" target="_blank" class="text-xl text-[#9146FF] hover:text-white"><i class="fab fa-twitch"></i></a>
-      <a href="@balazssssssss" target="_blank" class="text-xl text-[#00aaff] hover:text-white"><i class="fab fa-telegram"></i></a>
-      <a href="mailto:csakideglenes@gmail.com" target="_blank" class="text-xl text-white hover:text-yellow-400"><i class="fab fa-google"></i></a>
+    <nav class="hidden md:flex items-center gap-6 text-lg">
+      <a href="#" class="hover:text-yellow-400 transition">Home</a>
+      <a href="https://streamelements.com/Balazssssssss/store" target="_blank" class="hover:text-yellow-400 transition">Store</a>
+      <a href="https://twitch.tv/Balazssssssss" target="_blank" class="text-[#9146FF] hover:text-white"><i class="fab fa-twitch"></i></a>
+      <a href="@balazssssssss" target="_blank" class="text-[#00aaff] hover:text-white"><i class="fab fa-telegram"></i></a>
+      <a href="mailto:csakideglenes@gmail.com" class="hover:text-yellow-400"><i class="fab fa-google"></i></a>
     </nav>
   </div>
 </header>
 
-<!-- DISCORD PROMÓ -->
-
-
-<!-- Kártyák -->
-<main class="container mx-auto px-4 md:px-8 py-12">
+<main class="container mx-auto px-4 md:px-8 py-16">
   <div class="text-center mb-16">
-    <h2 class="text-3xl md:text-5xl font-bold mb-4">Exkluzív Kaszinó Ajánlatok</h2>
+    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-yellow-400">Exkluzív Kaszinó Ajánlatok</h2>
     <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
       Szerezd meg a legjobb ajánlatokat a legnépszerűbb online kaszinóktól! Regisztrálj még ma, és igényeld az üdvözlő bónuszodat!
     </p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <!-- 1. Kártya -->
-    <div class="casino-card">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- eredeti 3 -->
+    <div class="casino-card punter">
       <div class="p-6 flex flex-col items-center text-center">
-        <div class="w-24 h-24 mb-6 flex items-center justify-center casino-logo">
-          <img src="mrpunter.png" alt="SOON" class="w-full h-full object-contain">
-        </div>
-        <p class="mb-2 info">CRAB KASZINÓ</p>
-        <p class="mb-2 info">+100% BÓNUSZ</p>
-        <p class="mb-2 info">3-4 NAP CO</p>
+        <div class="casino-logo w-32 h-32 mb-8"><img src="mrpunter.png" alt=""></div>
+        <p class="mb-2 info">CRAB KASZINÓ</p><p class="mb-2 info">+100% BÓNUSZ</p><p class="mb-2 info">3-4 NAP CO</p>
         <div class="deal-badge absolute top-4 right-0 px-6 py-1 text-sm">HOT DEAL</div>
-      </div>
-      <div class="mt-auto p-6 pt-0">
-        <div class="flex justify-between items-center mb-4">
-          <div class="flex items-center text-yellow-400 text-sm">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-            <span class="ml-2 text-white">3.7</span>
-          </div>
-          <div class="text-xs bg-yellow-900 text-yellow-200 px-2 py-1 rounded"><i class="fas fa-check-circle mr-1"></i>Verified</div>
-        </div>
-        <a href="https://mrp.fynkelto.com/?mid=319519_1878709" target="_blank" class="btn-primary w-full py-3 rounded-lg text-center block">Regisztráció</a>
+        <a href="https://mrp.fynkelto.com/?mid=319519_1878709" target="_blank" class="btn-primary px-6 py-3 rounded-lg mt-4">Regisztráció</a>
       </div>
     </div>
 
-    <!-- 2. Kártya -->
-    <div class="casino-card">
+    <div class="casino-card velobet">
       <div class="p-6 flex flex-col items-center text-center">
-        <div class="w-24 h-24 mb-6 flex items-center justify-center casino-logo">
-          <img src="velobet.png" alt="" class="w-full h-full object-contain">
-        </div>
-        <p class="mb-2 info">CRPYTO/CARD DEPOSIT</p>
-        <p class="mb-2 info">+200% BÓNUSZ</p>
-        <p class="mb-2 info">GYORS CO</p>
-        <div class="deal-badge absolute top-4 right-0 px-6 py-1 text-sm">HOT DEAL</div>
-      </div>
-      <div class="mt-auto p-6 pt-0">
-        <div class="flex justify-between items-center mb-4">
-          <div class="flex items-center text-yellow-400 text-sm">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-            <span class="ml-2 text-white">4.8</span>
-          </div>
-          <div class="text-xs bg-yellow-900 text-yellow-200 px-2 py-1 rounded"><i class="fas fa-check-circle mr-1"></i>Verified</div>
-        </div>
-        <a href="https://velobet.com/en/registration?affid=40567&cxd=40567_980902" target="_blank" class="btn-primary w-full py-3 rounded-lg text-center block">Regisztráció</a>
+        <div class="casino-logo w-32 h-32 mb-8"><img src="velobet.png" alt=""></div>
+        <p class="mb-2 info">CRYPTO/CARD</p><p class="mb-2 info">Welcome Casino Package  GET UP TO 330% BONUS + 300 FREE SPINS!</p><p class="mb-2 info">Deposit 50 and get 50 Free Spins Promo Code: Blazs</p>
+        <div class="deal-badge absolute top-4 right-0 px-6 py-1 text-sm">LEADERBOARD SOON</div>
+        <a href="https://velobet.com/en/registration?affid=40567&cxd=40567_980902" target="_blank" class="btn-primary px-6 py-3 rounded-lg mt-4">Regisztráció</a>
       </div>
     </div>
 
-    <!-- 3. Kártya -->
-    <div class="casino-card">
+    <div class="casino-card fezbet">
       <div class="p-6 flex flex-col items-center text-center">
-        <div class="w-24 h-24 mb-6 flex items-center justify-center casino-logo">
-          <img src="fezbet.png" alt="SOON" class="w-full h-full object-contain">
-        </div>
-        <p class="mb-2 info">CRAB KASZINÓ</p>
-        <p class="mb-2 info">+100% BÓNUSZ</p>
-        <p class="mb-2 info">3-4 nap CO</p>
+        <div class="casino-logo w-32 h-32 mb-8"><img src="fezbet.png" alt=""></div>
+        <p class="mb-2 info">CRAB KASZINÓ</p><p class="mb-2 info">+100% BÓNUSZ</p><p class="mb-2 info">3-4 NAP CO</p>
         <div class="deal-badge absolute top-4 right-0 px-6 py-1 text-sm">HOT DEAL</div>
+        <a href="https://fzb.naralvin.com/?mid=312663_1858977" target="_blank" class="btn-primary px-6 py-3 rounded-lg mt-4">Regisztráció</a>
       </div>
-      <div class="mt-auto p-6 pt-0">
-        <div class="flex justify-between items-center mb-4">
-          <div class="flex items-center text-yellow-400 text-sm">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-            <span class="ml-2 text-white">3.5</span>
-          </div>
-          <div class="text-xs bg-yellow-900 text-yellow-200 px-2 py-1 rounded"><i class="fas fa-check-circle mr-1"></i>Verified</div>
-        </div>
-        <a href="https://fzb.naralvin.com/?mid=312663_1858977" target="_blank" class="btn-primary w-full py-3 rounded-lg text-center block">Regisztráció</a>
+    </div>
+
+    <!-- új 2 -->
+    <div class="casino-card luckyspin">
+      <div class="p-6 flex flex-col items-center text-center">
+        <div class="casino-logo w-32 h-32 mb-8"><img src="instant.png" alt=""></div>
+        <p class="mb-2 info">CRAB KASZINÓ</p><p class="mb-2 info">+150% BÓNUSZ</p><p class="mb-2 info">24 ÓRA CO</p>
+        <div class="deal-badge absolute top-4 right-0 px-6 py-1 text-sm">NEW</div>
+        <a href="https://record.discasinoaffiliates.com/_zJsBMCwbbrbgXusHI1eWymNd7ZgqdRLk/1/" target="_blank" class="btn-primary px-6 py-3 rounded-lg mt-4">Regisztráció</a>
+      </div>
+    </div>
+
+    <div class="casino-card royalwin">
+      <div class="p-6 flex flex-col items-center text-center">
+        <div class="casino-logo w-32 h-32 mb-8"><img src="mafia.png" alt=""></div>
+        <p class="mb-2 info">MAFIA CASINO</p><p class="mb-2 info">+250% BÓNUSZ</p><p class="mb-2 info">3-4 NAP CO</p>
+        <div class="deal-badge absolute top-4 right-0 px-6 py-1 text-sm">NEW</div>
+        <a href="https://mfac.lunostra.com/?mid=310424_1878532" target="_blank" class="btn-primary px-6 py-3 rounded-lg mt-4">Regisztráció</a>
       </div>
     </div>
   </div>
 </main>
 
 <script>
-function enterSite() {
-  document.getElementById('age-check').style.display = 'none';
-}
-function redirectToTwitch() {
-  window.location.href = 'https://www.twitch.tv/blitzzzfnbr';
-}
-</script>
-</body>
+function enterSite(){document.getElementById('age-check').style.display='none';}
+function redirectToTwitch(){window.location.href='https://www.twitch.tv/balazssssssss';}
 
+/* fade-in animáció scrollnál */
+const cards=document.querySelectorAll('.casino-card');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+cards.forEach(c=>observer.observe(c));
+</script>
+
+</body>
 </html>
